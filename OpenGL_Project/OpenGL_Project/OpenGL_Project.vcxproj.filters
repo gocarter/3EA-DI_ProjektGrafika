@@ -27,12 +27,18 @@
     <ClInclude Include="OpenGL_Project.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="myGLObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OpenGL_Project.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="myGLObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -46,6 +52,27 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="OpenGL_Project.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\checker.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\crate.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\GRASS.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\NAPIS.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\ROCK.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\SKY.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bitmaps\WATER.BMP">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

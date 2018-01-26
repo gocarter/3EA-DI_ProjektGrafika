@@ -149,12 +149,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="myGLObject.h" />
     <ClInclude Include="OpenGL_Project.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="myGLObject.cpp" />
     <ClCompile Include="OpenGL_Project.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -167,6 +169,13 @@
     <ResourceCompile Include="OpenGL_Project.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Bitmaps\checker.bmp" />
+    <Image Include="Bitmaps\crate.bmp" />
+    <Image Include="Bitmaps\GRASS.BMP" />
+    <Image Include="Bitmaps\NAPIS.bmp" />
+    <Image Include="Bitmaps\ROCK.BMP" />
+    <Image Include="Bitmaps\SKY.BMP" />
+    <Image Include="Bitmaps\WATER.BMP" />
     <Image Include="OpenGL_Project.ico" />
     <Image Include="small.ico" />
   </ItemGroup>
