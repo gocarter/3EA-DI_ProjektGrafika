@@ -20,7 +20,7 @@ Function:
 Reduces a normal vector specified as a set of three coordinates,
 to a unit normal vector of length one.
 */
-void myDrawClass::ReduceToUnit(float vector[3])
+void myDrawClass::reduceToUnit(GLfloat vector[3])
 {
 	float length;
 
@@ -46,7 +46,7 @@ void myDrawClass::ReduceToUnit(float vector[3])
 Function is calculating Normal Vector for 3 points surface.
 Points p1, p2, p3 specified in counter clock-wise order.
 */
-void myDrawClass::calcNormal(float v[3][3], float out[3])
+void myDrawClass::calcNormal(GLfloat v[3][3], GLfloat out[3])
 {
 	float v1[3], v2[3];
 	static const int x = 0;
@@ -69,7 +69,7 @@ void myDrawClass::calcNormal(float v[3][3], float out[3])
 	out[z] = v1[x] * v2[y] - v1[y] * v2[x];
 
 	// Normalize the vector (shorten length to one)
-	ReduceToUnit(out);
+	this->reduceToUnit(out);
 }
 //====================================================================
 
@@ -77,7 +77,7 @@ void myDrawClass::calcNormal(float v[3][3], float out[3])
 Function:
 Change viewing volume and viewport.  Called when window is resized
 */
-void myDrawClass::ChangeSize(GLsizei w, GLsizei h)
+void myDrawClass::changeSize(GLsizei w, GLsizei h)
 {
 	GLfloat nRange = 100.0f;
 	GLfloat fAspect;
@@ -114,12 +114,12 @@ void myDrawClass::ChangeSize(GLsizei w, GLsizei h)
 
 /* MyCode
 This function does any needed initialization on the rendering
-context.  Here it sets up and initializes the lighting for
+context and class specific things.  Here it sets up and initializes the lighting for
 the scene.
 */
-void myDrawClass::SetupRC()
+void myDrawClass::initDrawClass()
 {
-	// Light values and coordinates
+// Light values and coordinates
 	//GLfloat  ambientLight[] = { 0.3f, 0.3f, 0.3f, 1.0f };
 	//GLfloat  diffuseLight[] = { 0.7f, 0.7f, 0.7f, 1.0f };
 	//GLfloat  specular[] = { 1.0f, 1.0f, 1.0f, 1.0f};
@@ -129,33 +129,33 @@ void myDrawClass::SetupRC()
 
 	glEnable(GL_DEPTH_TEST);	// Hidden surface removal
 	glFrontFace(GL_CCW);		// Counter clock-wise polygons face out
-								//glEnable(GL_CULL_FACE);		// Do not calculate inside of jet
+	//glEnable(GL_CULL_FACE);		// Do not calculate inside of jet
 
-								// Enable lighting
-								//glEnable(GL_LIGHTING);
+// Enable lighting
+	//glEnable(GL_LIGHTING);
 
-								// Setup and enable light 0
-								//glLightfv(GL_LIGHT0,GL_AMBIENT,ambientLight);
-								//glLightfv(GL_LIGHT0,GL_DIFFUSE,diffuseLight);
-								//glLightfv(GL_LIGHT0,GL_SPECULAR,specular);
-								//glLightfv(GL_LIGHT0,GL_POSITION,lightPos);
-								//glEnable(GL_LIGHT0);
+// Setup and enable light 0
+	//glLightfv(GL_LIGHT0,GL_AMBIENT,ambientLight);
+	//glLightfv(GL_LIGHT0,GL_DIFFUSE,diffuseLight);
+	//glLightfv(GL_LIGHT0,GL_SPECULAR,specular);
+	//glLightfv(GL_LIGHT0,GL_POSITION,lightPos);
+	//glEnable(GL_LIGHT0);
 
-								// Enable color tracking
-								//glEnable(GL_COLOR_MATERIAL);
+// Enable color tracking
+	//glEnable(GL_COLOR_MATERIAL);
 
-								// Set Material properties to follow glColor values
-								//glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+// Set Material properties to follow glColor values
+	//glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
-								// All materials hereafter have full specular reflectivity
-								// with a high shine
-								//glMaterialfv(GL_FRONT, GL_SPECULAR,specref);
-								//glMateriali(GL_FRONT,GL_SHININESS,128);
+// All materials hereafter have full specular reflectivity with a high shine
+	//glMaterialfv(GL_FRONT, GL_SPECULAR,specref);
+	//glMateriali(GL_FRONT,GL_SHININESS,128);
 
 
-								// White background
+// White background
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	// Black brush
+
+// Black brush
 	glColor3f(0.0, 0.0, 0.0);
 }
 //==========================================================================
@@ -165,37 +165,37 @@ Function is loading bitmap and return pointer to it.
 It is also fills headings stucture.
 Does not support 8-bit bitmaps.
 */
-unsigned char *myDrawClass::LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader)
+unsigned char *myDrawClass::loadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader)
 {
-	FILE **filePtr = NULL;						// wskaŸnik pozycji pliku
-	BITMAPFILEHEADER	bitmapFileHeader;		// nag³ówek pliku
+	FILE **filePtr = NULL;						// wskaźnik pozycji pliku
+	BITMAPFILEHEADER	bitmapFileHeader;		// nagłówek pliku
 	unsigned char		*bitmapImage;			// dane obrazu
-	int					imageIdx = 0;		// licznik pikseli
-	unsigned char		tempRGB;				// zmienna zamiany sk³adowych
+	int					imageIdx = 0;			// licznik pikseli
+	unsigned char		tempRGB;				// zmienna zamiany składowych
 
-												// otwiera plik w trybie "read binary"
+// Otwiera plik w trybie "read binary"
 	if (fopen_s(filePtr, filename, "rb")) return NULL;
 
-	// wczytuje nag³ówek pliku
+// Wczytuje nagłówek pliku
 	fread(&bitmapFileHeader, sizeof(BITMAPFILEHEADER), 1, *filePtr);
 
-	// sprawdza, czy jest to plik formatu BMP
+// Sprawdza, czy jest to plik formatu BMP
 	if (bitmapFileHeader.bfType != BITMAP_ID)
 	{
 		fclose(*filePtr);
 		return NULL;
 	}
 
-	// wczytuje nag³ówek obrazu
+// Wczytuje nagłówek obrazu
 	fread(bitmapInfoHeader, sizeof(BITMAPINFOHEADER), 1, *filePtr);
 
-	// ustawia wskaŸnik pozycji pliku na pocz¹tku danych obrazu
+// ustawia wskaŸnik pozycji pliku na pocz¹tku danych obrazu
 	fseek(*filePtr, bitmapFileHeader.bfOffBits, SEEK_SET);
 
-	// przydziela pamiêæ buforowi obrazu
+// przydziela pamiêæ buforowi obrazu
 	bitmapImage = (unsigned char*)malloc(bitmapInfoHeader->biSizeImage);
 
-	// sprawdza, czy uda³o siê przydzieliæ pamiêæ
+// sprawdza, czy uda³o siê przydzieliæ pamiêæ
 	if (!bitmapImage)
 	{
 		free(bitmapImage);
@@ -203,17 +203,17 @@ unsigned char *myDrawClass::LoadBitmapFile(char *filename, BITMAPINFOHEADER *bit
 		return NULL;
 	}
 
-	// wczytuje dane obrazu
+// wczytuje dane obrazu
 	fread(bitmapImage, 1, bitmapInfoHeader->biSizeImage, *filePtr);
 
-	// sprawdza, czy dane zosta³y wczytane
+// sprawdza, czy dane zosta³y wczytane
 	if (bitmapImage == NULL)
 	{
 		fclose(*filePtr);
 		return NULL;
 	}
 
-	// zamienia miejscami sk³adowe R i B 
+// zamienia miejscami sk³adowe R i B 
 	for (imageIdx = 0; imageIdx < bitmapInfoHeader->biSizeImage; imageIdx += 3)
 	{
 		tempRGB = bitmapImage[imageIdx];
@@ -221,7 +221,7 @@ unsigned char *myDrawClass::LoadBitmapFile(char *filename, BITMAPINFOHEADER *bit
 		bitmapImage[imageIdx + 2] = tempRGB;
 	}
 
-	// zamyka plik i zwraca wskaŸnik bufora zawieraj¹cego wczytany obraz
+// zamyka plik i zwraca wskaŸnik bufora zawieraj¹cego wczytany obraz
 	fclose(*filePtr);
 	return bitmapImage;
 }
@@ -230,7 +230,7 @@ unsigned char *myDrawClass::LoadBitmapFile(char *filename, BITMAPINFOHEADER *bit
 /* MyCode
 Called to draw scene
 */
-void myDrawClass::RenderScene(void)
+void myDrawClass::renderScene(void)
 {
 	//float normal[3];	// Storeage for calculated surface normal
 
@@ -269,13 +269,13 @@ void myDrawClass::RenderScene(void)
 /* MyCode
 Select the pixel format for a given device context
 */
-void myDrawClass::SetDCPixelFormat(HDC hDC)
+void myDrawClass::setDCPixelFormat(HDC hDC)
 {
 	int nPixelFormat;
 
 	static PIXELFORMATDESCRIPTOR pfd = {
-		sizeof(PIXELFORMATDESCRIPTOR),  // Size of this structure
-		1,                                                              // Version of this structure    
+		sizeof(PIXELFORMATDESCRIPTOR),			// Size of this structure
+		1,                                      // Version of this structure    
 		PFD_DRAW_TO_WINDOW |                    // Draw to Window (not to bitmap)
 		PFD_SUPPORT_OPENGL |					// Support OpenGL calls in window
 		PFD_DOUBLEBUFFER,                       // Double buffered
@@ -291,10 +291,10 @@ void myDrawClass::SetDCPixelFormat(HDC hDC)
 		0,                                      // Not used to select mode
 		0,0,0 };                                // Not used to select mode
 
-												// Choose a pixel format that best matches that described in pfd
+// Choose a pixel format that best matches that described in pfd
 	nPixelFormat = ChoosePixelFormat(hDC, &pfd);
 
-	// Set the pixel format for the device context
+// Set the pixel format for the device context
 	SetPixelFormat(hDC, nPixelFormat, &pfd);
 }
 //=======================================================================
@@ -302,7 +302,7 @@ void myDrawClass::SetDCPixelFormat(HDC hDC)
 /* MyCode
 If necessary, creates a 3-3-2 palette for the device context listed.
 */
-HPALETTE myDrawClass::GetOpenGLPalette(HDC hDC)
+HPALETTE myDrawClass::getOpenGLPalette(HDC hDC)
 {
 	HPALETTE hRetPal = NULL;	// Handle to palette to be created
 	PIXELFORMATDESCRIPTOR pfd;	// Pixel Format Descriptor

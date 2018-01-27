@@ -24,16 +24,18 @@ private:
 	unsigned int		texture[2];			// obiekt tekstury
 
 //metody
-	void ReduceToUnit(float vector[3]);
-	void calcNormal(float v[3][3], float out[3]);
-	void ChangeSize(GLsizei w, GLsizei h);
-	void SetupRC();
-	unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader);
-	void SetDCPixelFormat(HDC hDC);
-	HPALETTE GetOpenGLPalette(HDC hDC);
-	void RenderScene(void);
+	void reduceToUnit(GLfloat vector[3]);
+	void calcNormal(GLfloat v[3][3], GLfloat out[3]);
+	unsigned char *loadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader);
+	void setDCPixelFormat(HDC hDC);
+	HPALETTE getOpenGLPalette(HDC hDC);
+	void renderScene(void);
 
 public:
+	void initDrawClass();
+	void changeSize(GLsizei w, GLsizei h);
+	void setAnimationState();
+
 	myDrawClass();
 	~myDrawClass();
 };
