@@ -1,13 +1,16 @@
 #pragma once
+#include <gl/GL.h>
 
 class myGLObject
 {
 public:
 	myGLObject();
-	virtual ~myGLObject();
+	~myGLObject();
 protected:
-	//Pozycja i zorientowanie w scenie
+	//Domyœlny kolor obiektu
 	GLfloat objectDefaultColor[4];
+
+	//Domyœlne w³aœciwoœci materia³u do oœwietlenia
 	
 
 	// Rysuje obiekt na podstawie wewnêtrznego stanu klasy

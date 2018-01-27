@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include <gl/GL.h>
 #include "myGLObject.h"
 
 

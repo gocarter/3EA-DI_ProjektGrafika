@@ -30,6 +30,12 @@
     <ClInclude Include="myGLObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="myGLRobotBaseObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="myDrawClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -39,6 +45,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="myGLObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="myGLRobotBaseObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="myDrawClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
