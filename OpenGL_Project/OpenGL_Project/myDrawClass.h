@@ -3,13 +3,15 @@
 #include <gl/GLU.h>
 
 #define BITMAP_ID 0x4D42		// identyfikator formatu BMP
-#define GL_PI 3.14159
-
+#define GL_PI 3.1415926535898
+#define glRGB(x, y, z)	glColor3f((GLfloat)x, (GLfloat)y, (GLfloat)z)
+extern HPALETTE hPalette;					// Color Palette handle
+extern HGLRC hRC;							// Permenant Rendering context
+extern HDC hDC;								// Private GDI Device context
 
 class myDrawClass
 {
 private:
-	HPALETTE hPalette = NULL;						// Color Palette handle
 
 // Rotation amounts
 	GLfloat xRot; // = 0.0f;
@@ -17,6 +19,7 @@ private:
 
 	GLsizei lastHeight;
 	GLsizei lastWidth;
+
 
 // Opis tekstury
 	BITMAPINFOHEADER	bitmapInfoHeader;	// nag³ówek obrazu
@@ -29,12 +32,15 @@ private:
 	unsigned char *loadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader);
 	void setDCPixelFormat(HDC hDC);
 	HPALETTE getOpenGLPalette(HDC hDC);
-	void renderScene(void);
 
 public:
-	void initDrawClass();
+	void renderScene(void);
+	void initDrawClass(HWND hWnd);
 	void changeSize(GLsizei w, GLsizei h);
-	void setAnimationState();
+	void startAnimation();
+	void stopAnimation();
+	void cameraApi(char KEY);
+
 
 	myDrawClass();
 	~myDrawClass();

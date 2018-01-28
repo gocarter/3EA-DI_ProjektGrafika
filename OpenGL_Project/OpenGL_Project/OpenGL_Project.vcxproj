@@ -152,6 +152,7 @@
     <ClInclude Include="myDrawClass.h" />
     <ClInclude Include="myGLObject.h" />
     <ClInclude Include="myGLRobotBaseObject.h" />
+    <ClInclude Include="myGLWalls.h" />
     <ClInclude Include="OpenGL_Project.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -161,6 +162,7 @@
     <ClCompile Include="myDrawClass.cpp" />
     <ClCompile Include="myGLObject.cpp" />
     <ClCompile Include="myGLRobotBaseObject.cpp" />
+    <ClCompile Include="myGLWalls.cpp" />
     <ClCompile Include="OpenGL_Project.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

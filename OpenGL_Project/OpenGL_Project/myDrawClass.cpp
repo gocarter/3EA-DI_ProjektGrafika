@@ -110,6 +110,15 @@ void myDrawClass::changeSize(GLsizei w, GLsizei h)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
+void myDrawClass::startAnimation()
+{
+}
+void myDrawClass::stopAnimation()
+{
+}
+void myDrawClass::cameraApi(char KEY)
+{
+}
 //============================================================================
 
 /* MyCode
@@ -117,8 +126,24 @@ This function does any needed initialization on the rendering
 context and class specific things.  Here it sets up and initializes the lighting for
 the scene.
 */
-void myDrawClass::initDrawClass()
+void myDrawClass::initDrawClass(HWND hWnd)
 {
+	// Store the device context
+	hDC = GetDC(hWnd);
+
+	// Select the pixel format
+	setDCPixelFormat(hDC);
+
+	// Create palette if needed
+	hPalette = getOpenGLPalette(hDC);
+
+	// Create the rendering context and make it current
+	hRC = wglCreateContext(hDC);
+	wglMakeCurrent(hDC, hRC);
+
+/*
+Inicjalizacja parametrów renderowania OpenGL
+*/
 // Light values and coordinates
 	//GLfloat  ambientLight[] = { 0.3f, 0.3f, 0.3f, 1.0f };
 	//GLfloat  diffuseLight[] = { 0.7f, 0.7f, 0.7f, 1.0f };
@@ -157,6 +182,52 @@ void myDrawClass::initDrawClass()
 
 // Black brush
 	glColor3f(0.0, 0.0, 0.0);
+
+/*
+Wczytywanie tekstur
+*/
+	glGenTextures(2, &texture[0]);                  // tworzy obiekt tekstury			
+
+	SetTimer(hWnd, 101, 200, NULL);
+	// ³aduje pierwszy obraz tekstury:
+	bitmapData = loadBitmapFile("Bitmapy\\checker.bmp", &bitmapInfoHeader);
+
+	glBindTexture(GL_TEXTURE_2D, texture[0]);       // aktywuje obiekt tekstury
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+	// tworzy obraz tekstury
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader.biWidth,
+		bitmapInfoHeader.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData);
+
+	if (bitmapData)
+		free(bitmapData);
+
+	// ³aduje drugi obraz tekstury:
+	bitmapData = loadBitmapFile("Bitmapy\\crate.bmp", &bitmapInfoHeader);
+	glBindTexture(GL_TEXTURE_2D, texture[1]);       // aktywuje obiekt tekstury
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+	// tworzy obraz tekstury
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader.biWidth,
+		bitmapInfoHeader.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData);
+
+	if (bitmapData)
+		free(bitmapData);
+
+	// ustalenie sposobu mieszania tekstury z t³em
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+
 }
 //==========================================================================
 
