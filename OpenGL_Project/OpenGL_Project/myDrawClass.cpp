@@ -119,6 +119,9 @@ void myDrawClass::stopAnimation()
 void myDrawClass::cameraApi(char KEY)
 {
 }
+void myDrawClass::animationTick()
+{
+}
 //============================================================================
 
 /* MyCode
@@ -227,6 +230,7 @@ Wczytywanie tekstur
 	// ustalenie sposobu mieszania tekstury z t³em
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
+	SetTimer(hWnd, 101, 40, NULL);
 
 }
 //==========================================================================

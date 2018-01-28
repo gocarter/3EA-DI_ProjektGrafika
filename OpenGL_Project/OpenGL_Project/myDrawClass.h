@@ -11,14 +11,15 @@ extern HDC hDC;								// Private GDI Device context
 
 class myDrawClass
 {
-private:
+protected:
+	bool animationState;
+	long animationTickCounter;
 
-// Rotation amounts
-	GLfloat xRot; // = 0.0f;
-	GLfloat yRot; // = 0.0f;
+private:
 
 	GLsizei lastHeight;
 	GLsizei lastWidth;
+
 
 
 // Opis tekstury
@@ -32,6 +33,8 @@ private:
 	unsigned char *loadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader);
 	void setDCPixelFormat(HDC hDC);
 	HPALETTE getOpenGLPalette(HDC hDC);
+	void animationCalc();
+
 
 public:
 	void renderScene(void);
@@ -40,7 +43,7 @@ public:
 	void startAnimation();
 	void stopAnimation();
 	void cameraApi(char KEY);
-
+	void animationTick();
 
 	myDrawClass();
 	~myDrawClass();

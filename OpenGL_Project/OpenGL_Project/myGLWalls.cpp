@@ -14,5 +14,5 @@ myGLWalls::~myGLWalls()
 void myGLWalls::Draw()
 {
 	glBegin(GL_TRIANGLE_STRIP);
-	glVertex3f()
+	glVertex3f(0.0,0.0,0.0);
 }
